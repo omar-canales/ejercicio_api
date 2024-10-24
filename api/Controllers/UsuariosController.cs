@@ -1,4 +1,4 @@
-﻿using api.DTO;
+﻿using api.Entities;
 using api.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +18,7 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UsuarioDTO>>> GetUsuarios()
+        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
         {
             try
             {
@@ -32,7 +32,7 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<UsuarioDTO>> PostUsuario([FromBody] UsuarioDTO usuario)
+        public async Task<ActionResult<Usuario>> PostUsuario([FromBody] Usuario usuario)
         {
             try
             {
@@ -48,11 +48,12 @@ namespace api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<UsuarioDTO>> GetUsuario(int id)
+        public async Task<ActionResult<Usuario>> GetUsuario(int id)
         {
             try
             {
                 var usuario = await _repository.GetByIdAsync(id);
+
                 if (usuario == null)
                 {
                     return NotFound();

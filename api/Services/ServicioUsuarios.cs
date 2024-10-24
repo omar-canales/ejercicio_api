@@ -1,4 +1,4 @@
-﻿using api.DTO;
+﻿using api.Entities;
 using System.Data.SqlClient;
 using System.Data;
 using Dapper;
@@ -18,7 +18,7 @@ namespace api.Services
             _connection = connection;
         }
 
-        public async Task<IEnumerable<UsuarioDTO>> GetAllAsync()
+        public async Task<IEnumerable<Usuario>> GetAllAsync()
         {
             IDbConnection conn = _connection.GetConnection;
 
@@ -26,13 +26,13 @@ namespace api.Services
             {
                 if (dbConnection.State == ConnectionState.Closed)
                     dbConnection.Open();
-                return await dbConnection.QueryAsync<UsuarioDTO>("SELECT * FROM Usuarios");
+                return await dbConnection.QueryAsync<Usuario>("SELECT * FROM Usuarios");
             }
 
 
 
         }
-            public async Task<UsuarioDTO> GetByIdAsync(int id)
+            public async Task<Usuario> GetByIdAsync(int id)
         {
             IDbConnection conn = _connection.GetConnection;
 
@@ -40,11 +40,11 @@ namespace api.Services
             {
                 if (dbConnection.State == ConnectionState.Closed)
                     dbConnection.Open();
-                return await dbConnection.QueryFirstOrDefaultAsync<UsuarioDTO>("SELECT * FROM Usuarios WHERE Id = @Id", new { Id = id });
+                return await dbConnection.QueryFirstOrDefaultAsync<Usuario>("SELECT * FROM Usuarios WHERE Id = @Id", new { Id = id });
             }
         }
 
-        public async Task<int> AddAsync(UsuarioDTO usuario)
+        public async Task<int> AddAsync(Usuario usuario)
         {
             IDbConnection conn = _connection.GetConnection;
 
